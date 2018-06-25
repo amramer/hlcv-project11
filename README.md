@@ -10,6 +10,7 @@ HLCV Project for tumor segmentation
  - [Automatic Brain Tumor Detection and Segmentation Using U-Net Based Fully Convolutional Networks](https://arxiv.org/pdf/1705.03820) - The "The original U-Net architecture (?) 
  
  - [Multimodal Brain MRI Tumor Segmentation via Convolutional Neural Networks - Shen and Anderson](http://cs231n.stanford.edu/reports/2017/pdfs/512.pdf) - Transfer learning from the BraTS data to the Rembrandt dataset
+ (http://cs231n.stanford.edu/reports/2017/posters/512.pdf) - poster
 
 - [3D Convolutional Neural Network for Brain Tumor Segmentation](http://cs231n.stanford.edu/reports/2017/pdfs/526.pdf) - Building 3D convolutional neural networks for Brain Tumor segmentation
 
