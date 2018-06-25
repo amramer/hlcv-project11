@@ -20,3 +20,6 @@ HLCV Project for tumor segmentation
 
 ## Datasets
 - [Rembrandt Dataset information](https://wiki.cancerimagingarchive.net/display/Public/REMBRANDT#ce07f43b807b46f493a2c49089916459) - Dataset to be used for Transfer learning from the BraTS 2017 challenge
+
+## Software Application
+- [ITK-SNAP](http://www.itksnap.org/pmwiki/pmwiki.php) - is a software application used to segment structures in 3D medical images.
