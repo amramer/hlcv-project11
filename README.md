@@ -16,7 +16,8 @@ HLCV Project for tumor segmentation
 - [3D Convolutional Neural Network for Brain Tumor Segmentation](http://cs231n.stanford.edu/reports/2017/pdfs/526.pdf) - Building 3D convolutional neural networks for Brain Tumor segmentation
 
 ## Pretrained model
- - [U Net Implementation](https://github.com/ellisdg/3DUnetCNN) - Weights are downloaded from the link provided in the repository for the Original U-Net Model. Can be run to verify the weights
+ 
+ - [U Net Implementation](https://github.com/zsdonghao/u-net-brain-tumor) - 2D U-net implementation in tensorflow and tensorlayer  
 
 ## Datasets
 - [Rembrandt Dataset information](https://wiki.cancerimagingarchive.net/display/Public/REMBRANDT#ce07f43b807b46f493a2c49089916459) - Dataset to be used for Transfer learning from the BraTS 2017 challenge
