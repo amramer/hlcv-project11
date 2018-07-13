@@ -85,11 +85,11 @@ def main(task='all'):
 
     ###======================== HYPER-PARAMETERS ============================###
     batch_size = 10
-    lr = 0.0001 
+    lr = 0.000005 
     # lr_decay = 0.5
     # decay_every = 100
     beta1 = 0.9
-    n_epoch = 100
+    n_epoch = 20
     print_freq_step = 100
 
     ###======================== SHOW DATA ===================================###
@@ -148,7 +148,21 @@ def main(task='all'):
         ## load existing model if possible
         tl.files.load_and_assign_npz(sess=sess, name=save_dir+'/u_net_{}.npz'.format(task), network=net)
 
-        ###======================== TRAINING ================================###
+	
+
+    ###======================== TRAINING ================================###
+    savefile = "log.txt"
+    sdice_arr = []
+    hdice_arr = []
+    iou_arr = []
+    
+    sdice_arr_test = []
+    hdice_arr_test = []
+    iou_arr_test = []
+    
+    
+    f = open(savefile, 'w')
+    
     for epoch in range(0, n_epoch+1):
         epoch_time = time.time()
         ## update decay learning rate at the beginning of a epoch
@@ -203,6 +217,11 @@ def main(task='all'):
             if np.isnan(out).any():
                 exit(" ** NaN found in output images during training, stop training")
 
+        sdice_arr.append(total_dice/n_batch)
+        hdice_arr.append(total_dice_hard/n_batch)
+        iou_arr.append(total_iou/n_batch)
+        f.write(" ** Epoch [%d/%d] train 1-dice: %f hard-dice: %f iou: %f took %fs (2d with distortion)" %(epoch, n_epoch, 
+        total_dice/n_batch, total_dice_hard/n_batch, total_iou/n_batch, time.time()-epoch_time))
         print(" ** Epoch [%d/%d] train 1-dice: %f hard-dice: %f iou: %f took %fs (2d with distortion)" %
                 (epoch, n_epoch, total_dice/n_batch, total_dice_hard/n_batch, total_iou/n_batch, time.time()-epoch_time))
 
@@ -224,7 +243,13 @@ def main(task='all'):
                     {t_image: b_images, t_seg: b_labels})
             total_dice += _dice; total_iou += _iou; total_dice_hard += _diceh
             n_batch += 1
-
+		
+        sdice_arr_test.append(total_dice/n_batch)
+        hdice_arr_test.append(total_dice_hard/n_batch)
+        iou_arr_test.append(total_iou/n_batch)
+		
+        f.write(" **"+" "*17+"test 1-dice: %f hard-dice: %f iou: %f (2d no distortion)" % (total_dice/n_batch, 
+	total_dice_hard/n_batch, total_iou/n_batch))
         print(" **"+" "*17+"test 1-dice: %f hard-dice: %f iou: %f (2d no distortion)" %
                 (total_dice/n_batch, total_dice_hard/n_batch, total_iou/n_batch))
         print(" task: {}".format(task))
@@ -238,7 +263,24 @@ def main(task='all'):
 
         ###======================== SAVE MODEL ==========================###
         tl.files.save_npz(net.all_params, name=save_dir+'/u_net_{}.npz'.format(task), sess=sess)
+    f.close()
+	
+    sdice_arr = np.array(sdice_arr).reshape(n_epoch+1,1)
+    hdice_arr = np.array(hdice_arr).reshape(n_epoch+1,1)
+    iou_arr = np.array(iou_arr).reshape(n_epoch+1,1)
 
+	
+    sdice_arr_test = np.array(sdice_arr_test).reshape(n_epoch+1, 1)
+    hdice_arr_test = np.array(hdice_arr_test).reshape(n_epoch+1, 1)
+    iou_arr_test = np.array(iou_arr_test).reshape(n_epoch+1, 1)
+
+    eval_metrics = np.concatenate((sdice_arr, hdice_arr, iou_arr), axis = 1)
+    eval_metrics_test = np.concatenate((sdice_arr_test, hdice_arr_test, iou_arr_test), axis = 1)
+    
+    np.savetxt("eval_metrics.txt", eval_metrics)
+    np.savetxt("eval_metrics_test.txt", eval_metrics_test)
+	
+	
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
