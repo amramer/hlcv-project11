@@ -19,15 +19,15 @@ core: 1 4
 enhance: 4
 """
 ###============================= SETTINGS ===================================###
-DATA_SIZE = 'half' # (small, half or all)
+DATA_SIZE = 'all' # (small, half or all)
 
-save_dir = "data/train_dev_all/"
+save_dir = "/raid/hlcv-projects/student_directories/team11/Project/Implementation/Code/hlcv-project11/code/train_dev_all/"
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
-HGG_data_path = "data/Brats17TrainingData/HGG"
-LGG_data_path = "data/Brats17TrainingData/LGG"
-survival_csv_path = "data/Brats17TrainingData/survival_data.csv"
+HGG_data_path = "/raid/hlcv-projects/student_directories/team11/Project/Dataset/BraTs2017/training/MICCAI_BraTS17_Data_Training/HGG"
+LGG_data_path = "/raid/hlcv-projects/student_directories/team11/Project/Dataset/BraTs2017/training/MICCAI_BraTS17_Data_Training/LGG"
+survival_csv_path = "/raid/hlcv-projects/student_directories/team11/Project/Dataset/BraTs2017/training/MICCAI_BraTS17_Data_Training/survival_data.csv"
 ###==========================================================================###
 
 survival_id_list = []
